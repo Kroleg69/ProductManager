@@ -15,6 +15,11 @@ public class ProductRepository {
     }
 
     public void removeByID(int removeId) {
+        Product removingProduct = findById(removeId);
+        if (removingProduct == null) {
+            throw new NotFoundException(removeId);
+        }
+
         Product[] tmp = new Product[products.length - 1];
         int index = 0;
         for (Product product : products) {
@@ -26,5 +31,13 @@ public class ProductRepository {
             }
         }
         products = tmp;
+    }
+    public Product findById(int id) {
+        for (Product product : products) {
+            if (product.getId() == id) {
+                return product;
+            }
+        }
+        return null;
     }
 }
